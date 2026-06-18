@@ -1,12 +1,12 @@
+import NextAuth from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
-import type { NextAuthOptions } from "next-auth";
 import bcrypt from "bcryptjs";
 import { ConvexHttpClient } from "convex/browser";
 import { api } from "@/convex/_generated/api";
 
 const convex = new ConvexHttpClient(process.env.NEXT_PUBLIC_CONVEX_URL!);
 
-export const authOptions: NextAuthOptions = {
+export const { handlers, auth, signIn, signOut } = NextAuth({
   providers: [
     CredentialsProvider({
       name: "credentials",
@@ -19,13 +19,13 @@ export const authOptions: NextAuthOptions = {
 
         try {
           const user = await convex.query(api.auth.getUserByEmail, {
-            email: credentials.email,
+            email: credentials.email as string,
           });
 
           if (!user) return null;
 
           const passwordMatch = await bcrypt.compare(
-            credentials.password,
+            credentials.password as string,
             user.passwordHash,
           );
 
@@ -46,35 +46,22 @@ export const authOptions: NextAuthOptions = {
     }),
   ],
 
-  cookies: {
-    sessionToken: {
-      name: "next-auth.session-token",
-      options: {
-        httpOnly: true,
-        sameSite: "lax",
-        path: "/",
-        secure: false,
-      },
-    },
-  },
-
   callbacks: {
     jwt({ token, user }) {
       if (user) {
-        token.role = (user as any).role;
-        token.firmId = (user as any).firmId;
+        token.role = user.role;
+        token.firmId = user.firmId;
       }
       return token;
     },
     session({ session, token }) {
       if (session.user) {
-        (session.user as any).role = token.role as string;
-        (session.user as any).firmId = token.firmId;
+        session.user.role = token.role as string | undefined;
+        session.user.firmId = token.firmId as string | undefined;
       }
       return session;
     },
   },
-
   pages: { signIn: "/login" },
   secret: process.env.NEXTAUTH_SECRET,
-};
+});

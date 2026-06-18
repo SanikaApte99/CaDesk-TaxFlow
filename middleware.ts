@@ -1,37 +1,34 @@
-import { withAuth } from "next-auth/middleware";
+import { auth } from "@/lib/auth";
 import { NextResponse } from "next/server";
 
-export default withAuth(
-  function middleware(req) {
-    const { pathname } = req.nextUrl;
-    const role = req.nextauth.token?.role as string | undefined;
+export default auth((req) => {
+  const { pathname } = req.nextUrl;
+  const role = req.auth?.user?.role as string | undefined;
 
-    //  Admin-only routes
-    const adminOnly = ["/settings"];
-    if (adminOnly.some((r) => pathname.startsWith(r))) {
-      if (role !== "admin") {
-        return NextResponse.redirect(new URL("/dashboard", req.url));
-      }
+  if (!req.auth) {
+    const signInUrl = new URL("/login", req.url);
+    return NextResponse.redirect(signInUrl);
+  }
+
+  //  Admin-only routes
+  const adminOnly = ["/settings"];
+  if (adminOnly.some((r) => pathname.startsWith(r))) {
+    if (role !== "admin") {
+      return NextResponse.redirect(new URL("/dashboard", req.url));
     }
+  }
 
-    //  Senior CA + Admin routes
-    const seniorAndAdmin = ["/notices", "/ai"];
-    if (seniorAndAdmin.some((r) => pathname.startsWith(r))) {
-      if (role !== "admin" && role !== "senior-ca") {
-        return NextResponse.redirect(new URL("/dashboard", req.url));
-      }
+  //  Senior CA + Admin routes
+  const seniorAndAdmin = ["/notices", "/ai"];
+  if (seniorAndAdmin.some((r) => pathname.startsWith(r))) {
+    if (role !== "admin" && role !== "senior-ca") {
+      return NextResponse.redirect(new URL("/dashboard", req.url));
     }
+  }
 
-    // All other protected routes — any authenticated user can access
-    return NextResponse.next();
-  },
-  {
-    callbacks: {
-      // Only run middleware if user is authenticated
-      authorized: ({ token }) => !!token,
-    },
-  },
-);
+  // All other protected routes — any authenticated user can access
+  return NextResponse.next();
+});
 
 export const config = {
   matcher: [
