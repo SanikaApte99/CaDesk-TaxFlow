@@ -61,7 +61,7 @@ const SERVICE_TYPES: Record<string, string[]> = {
 };
 
 const ROLE_OPTIONS = [
-  { value: "associate-ca", label: "Associate CA" },
+  { value: "assistant", label: "Assistant" },
   { value: "senior-ca", label: "Senior CA" },
   { value: "admin", label: "Admin" },
 ];

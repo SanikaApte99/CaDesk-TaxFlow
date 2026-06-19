@@ -46,8 +46,8 @@ const roleConfig: Record<string, { label: string; cls: string }> = {
     label: "Senior CA",
     cls: "bg-blue-100   text-blue-700   border-blue-200",
   },
-  "associate-ca": {
-    label: "Associate CA",
+  "assistant": {
+    label: "Assistant",
     cls: "bg-gray-100   text-gray-600   border-gray-200",
   },
 };
@@ -183,7 +183,7 @@ function AddMemberModal({
               </SelectTrigger>
               <SelectContent>
                 <SelectItem value="senior-ca">Senior CA</SelectItem>
-                <SelectItem value="associate-ca">Associate CA</SelectItem>
+                <SelectItem value="assistant">Assistant</SelectItem>
               </SelectContent>
             </Select>
             {errors.role && (
@@ -426,7 +426,7 @@ export default function SettingsPage() {
             <div className="space-y-0">
               {members.map((member, i) => {
                 const rc =
-                  roleConfig[member.role] ?? roleConfig["associate-ca"];
+                  roleConfig[member.role] ?? roleConfig["assistant"];
                 const initials = member.name
                   .split(" ")
                   .map((n: string) => n[0])

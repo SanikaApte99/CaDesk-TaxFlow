@@ -1,4 +1,4 @@
-export type Role = "admin" | "senior-ca" | "associate-ca";
+export type Role = "admin" | "senior-ca" | "assistant";
 
 export const permissions = {
   canViewRevenue: (role: Role) => role === "admin",
@@ -75,11 +75,11 @@ export function getNavLinks(role: Role) {
 export const roleLabel: Record<Role, string> = {
   admin: "Admin",
   "senior-ca": "Senior CA",
-  "associate-ca": "Associate CA",
+  "assistant": "Assistant",
 };
 
 export const roleColor: Record<Role, string> = {
   admin: "bg-purple-100 text-purple-700",
   "senior-ca": "bg-blue-100   text-blue-700",
-  "associate-ca": "bg-gray-100   text-gray-600",
+  "assistant": "bg-gray-100   text-gray-600",
 };

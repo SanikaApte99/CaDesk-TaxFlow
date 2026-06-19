@@ -139,7 +139,7 @@ export function ClientTable({ role }: ClientTableProps) {
               Client portfolio
               <span className="ml-2 text-xs font-normal text-muted-foreground">
                 ({clients.length}{" "}
-                {role === "associate-ca" ? "assigned" : "total"})
+                {role === "assistant" ? "assigned" : "total"})
               </span>
             </CardTitle>
 

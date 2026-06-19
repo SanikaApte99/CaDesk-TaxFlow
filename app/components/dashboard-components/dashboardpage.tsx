@@ -68,21 +68,21 @@ export default function DashboardPage() {
       <div className="grid gap-3 sm:grid-cols-2 xl:grid-cols-4">
         <MetricCard
           title="Total clients"
-          value={role === "associate-ca" ? "12" : "128"}
+          value={role === "assistant" ? "12" : "128"}
           trend="up"
           trendLabel={
-            role === "associate-ca" ? "Assigned to you" : "+12 this month"
+            role === "assistant" ? "Assigned to you" : "+12 this month"
           }
         />
         <MetricCard
           title="Pending filings"
-          value={role === "associate-ca" ? "4" : "23"}
+          value={role === "assistant" ? "4" : "23"}
           trend="warn"
-          trendLabel={role === "associate-ca" ? "2 urgent" : "5 urgent"}
+          trendLabel={role === "assistant" ? "2 urgent" : "5 urgent"}
         />
         <MetricCard
           title="Completed returns"
-          value={role === "associate-ca" ? "8" : "89"}
+          value={role === "assistant" ? "8" : "89"}
           trend="up"
           trendLabel="+18% vs last month"
         />
@@ -101,7 +101,7 @@ export default function DashboardPage() {
       </div>
 
       {/* Associate notice */}
-      {role === "associate-ca" && (
+      {role === "assistant" && (
         <div className="flex items-start gap-2.5 rounded-lg border border-blue-200 bg-blue-50 px-4 py-3 text-sm text-blue-700">
           <AlertCircle className="h-4 w-4 mt-0.5 shrink-0" />
           <span>
@@ -120,7 +120,7 @@ export default function DashboardPage() {
 
           <RoleGuard
             role={role}
-            allowed={["admin", "senior-ca", "associate-ca"]}
+            allowed={["admin", "senior-ca", "assistant"]}
             fallback={
               <div className="rounded-xl border border-dashed border-zinc-200 bg-zinc-50 p-5 text-center">
                 <Lock className="h-4 w-4 text-zinc-300 mx-auto mb-2" />
