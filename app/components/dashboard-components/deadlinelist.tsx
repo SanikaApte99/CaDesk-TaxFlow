@@ -41,6 +41,70 @@ const urgencyConfig: Record<
   },
 };
 
+// export function DeadlineList() {
+//   return (
+//     <Card className="shadow-none">
+//       <CardHeader className="pb-3 pt-5 px-5">
+//         <div className="flex items-center justify-between">
+//           <CardTitle className="text-sm font-medium">
+//             Upcoming deadlines
+//           </CardTitle>
+//           <button className="text-xs text-blue-600 hover:underline">
+//             Full calendar →
+//           </button>
+//         </div>
+//       </CardHeader>
+//       <CardContent className="px-5 pb-4">
+//         <div className="space-y-0">
+//           {deadlines.map((dl, i) => {
+//             const config = urgencyConfig[dl.urgency];
+//             const Icon = config.icon;
+//             return (
+//               <div
+//                 key={dl.id}
+//                 className={cn(
+//                   "flex items-center justify-between gap-3 py-2.5",
+//                   i < deadlines.length - 1 && "border-b",
+//                 )}
+//               >
+//                 <div className="min-w-0">
+//                   <div
+//                     className={cn(
+//                       "text-sm font-medium",
+//                       dl.urgency === "done" &&
+//                         "text-muted-foreground line-through",
+//                     )}
+//                   >
+//                     {dl.name}
+//                   </div>
+//                   <div className="text-xs text-muted-foreground">{dl.sub}</div>
+//                 </div>
+
+//                 <div className="flex items-center gap-2 shrink-0">
+//                   {dl.urgency !== "done" && (
+//                     <span className="text-xs text-muted-foreground">
+//                       {dl.date}
+//                     </span>
+//                   )}
+//                   <Badge
+//                     variant="outline"
+//                     className={cn(
+//                       "text-[11px] font-medium gap-1",
+//                       config.badgeCls,
+//                     )}
+//                   >
+//                     {Icon && <Icon className="h-3 w-3" />}
+//                     {dl.daysLabel}
+//                   </Badge>
+//                 </div>
+//               </div>
+//             );
+//           })}
+//         </div>
+//       </CardContent>
+//     </Card>
+//   );
+// }
 export function DeadlineList() {
   return (
     <Card className="shadow-none">
@@ -49,57 +113,15 @@ export function DeadlineList() {
           <CardTitle className="text-sm font-medium">
             Upcoming deadlines
           </CardTitle>
-          <button className="text-xs text-blue-600 hover:underline">
-            Full calendar →
-          </button>
         </div>
       </CardHeader>
       <CardContent className="px-5 pb-4">
-        <div className="space-y-0">
-          {deadlines.map((dl, i) => {
-            const config = urgencyConfig[dl.urgency];
-            const Icon = config.icon;
-            return (
-              <div
-                key={dl.id}
-                className={cn(
-                  "flex items-center justify-between gap-3 py-2.5",
-                  i < deadlines.length - 1 && "border-b",
-                )}
-              >
-                <div className="min-w-0">
-                  <div
-                    className={cn(
-                      "text-sm font-medium",
-                      dl.urgency === "done" &&
-                        "text-muted-foreground line-through",
-                    )}
-                  >
-                    {dl.name}
-                  </div>
-                  <div className="text-xs text-muted-foreground">{dl.sub}</div>
-                </div>
-
-                <div className="flex items-center gap-2 shrink-0">
-                  {dl.urgency !== "done" && (
-                    <span className="text-xs text-muted-foreground">
-                      {dl.date}
-                    </span>
-                  )}
-                  <Badge
-                    variant="outline"
-                    className={cn(
-                      "text-[11px] font-medium gap-1",
-                      config.badgeCls,
-                    )}
-                  >
-                    {Icon && <Icon className="h-3 w-3" />}
-                    {dl.daysLabel}
-                  </Badge>
-                </div>
-              </div>
-            );
-          })}
+        <div className="flex flex-col items-center justify-center py-6 gap-2 text-center">
+          <AlarmClock className="h-8 w-8 text-muted-foreground/40" />
+          <p className="text-sm font-medium text-muted-foreground">Coming soon</p>
+          <p className="text-xs text-muted-foreground/60">
+            Deadline tracking will be available here shortly.
+          </p>
         </div>
       </CardContent>
     </Card>
